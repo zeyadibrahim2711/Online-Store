@@ -77,11 +77,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OnlineStore.Business\OnlineStore.Business.csproj">
+    <ProjectReference Include="OnlineStore.Business\OnlineStore.Business.csproj">
       <Project>{d2a0f31f-b2e4-4c1b-94f6-d59a76574a03}</Project>
       <Name>OnlineStore.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OnlineStore.Models\OnlineStore.Models.csproj">
+    <ProjectReference Include="OnlineStore.Models\OnlineStore.Models.csproj">
       <Project>{a710a518-630c-4d9d-bcec-74e0eedd75c4}</Project>
       <Name>OnlineStore.Models</Name>
     </ProjectReference>
