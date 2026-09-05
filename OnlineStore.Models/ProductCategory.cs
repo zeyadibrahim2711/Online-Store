@@ -1,6 +1,6 @@
 ﻿namespace OnlineStore.Models
 {
-    public class Category
+    public class ProductCategory
     {
         public int CategoryID { get; set; }
 
