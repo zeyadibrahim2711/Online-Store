@@ -80,5 +80,24 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool Delete(int imageId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            DELETE FROM ProductImages
+            WHERE ImageID = @ImageID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ImageID", System.Data.SqlDbType.Int)
+                                      .Value = imageId;
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
     }
 }
