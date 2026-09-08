@@ -23,5 +23,7 @@ namespace OnlineStore.Models
         public ShippingStatus Status { get; set; }
 
         public DateTime EstimatedDeliveryDate { get; set; }
+        public DateTime? ActualDeliveryDate { get; set; }
+
     }
 }
