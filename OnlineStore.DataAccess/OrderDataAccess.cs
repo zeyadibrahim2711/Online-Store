@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using static OnlineStore.Models.Order;
 
@@ -50,6 +51,8 @@ namespace OnlineStore.DataAccess
 
             return null;
         }
+    
+
         public List<Order> GetAll()
         {
             List<Order> orders = new List<Order>();
@@ -161,5 +164,26 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool HasOrdersByCustomerId(int customerId)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
+    {
+        string query = @"
+            SELECT COUNT(*)
+            FROM Orders
+            WHERE CustomerID = @CustomerID";
+
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            command.Parameters.Add("@CustomerID",System.Data.SqlDbType.Int)
+                            .Value = customerId;
+
+            connection.Open();
+
+            return (int)command.ExecuteScalar() > 0;
+        }
+    }
+}
+        
     }
 }
