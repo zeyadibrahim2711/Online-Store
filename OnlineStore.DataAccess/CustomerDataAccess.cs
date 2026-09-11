@@ -51,6 +51,47 @@ namespace OnlineStore.DataAccess
 
             return null;
         }
+        public Customer GetByEmail(string email)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
+    {
+        string query = @"
+            SELECT CustomerID,
+                   FirstName,
+                   LastName,
+                   Email,
+                   Phone,
+                   Address
+            FROM Customers
+            WHERE Email = @Email";
+
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            command.Parameters.Add("@Email", SqlDbType.NVarChar, 100)
+                              .Value = email;
+
+            connection.Open();
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new Customer
+                    {
+                        CustomerID = (int)reader["CustomerID"],
+                        FirstName = reader["FirstName"].ToString(),
+                        LastName = reader["LastName"].ToString(),
+                        Email = reader["Email"].ToString(),
+                        Phone = reader["Phone"].ToString(),
+                        Address = reader["Address"].ToString()
+                    };
+                }
+            }
+        }
+    }
+
+    return null;
+}
         public List<Customer> GetAll()
         {
             List<Customer> customers = new List<Customer>();
