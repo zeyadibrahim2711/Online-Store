@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using OnlineStore.DataAccess;
 using OnlineStore.Models;
 
@@ -25,15 +26,37 @@ namespace OnlineStore.Business
             return _customerDataAccess.Add(customer);
         }
         public bool Delete(int customerId)
-       {
-             if (!_customerDataAccess.Exists(customerId))
-               return false;
+        {
+            if (!_customerDataAccess.Exists(customerId))
+                return false;
 
-              if (_orderDataAccess.HasOrdersByCustomerId(customerId))
-             return false;
+            if (_orderDataAccess.HasOrdersByCustomerId(customerId))
+                return false;
 
-             return _customerDataAccess.Delete(customerId);
+            return _customerDataAccess.Delete(customerId);
        }
+        public bool Update(Customer customer)
+        {
+            if (!_customerDataAccess.Exists(customer.CustomerID))
+                return false;
+
+            if (_customerDataAccess.EmailExistsForAnotherCustomer(customer.Email, customer.CustomerID))
+                return false;
+
+            return _customerDataAccess.Update(customer);
+        }
+        public Customer GetById(int customerId)
+        {
+            if (customerId <= 0)
+                return null;
+
+            return _customerDataAccess.GetById(customerId);
+        }
+        public List<Customer> GetAll()
+        {
+            return _customerDataAccess.GetAll();
+        }
+        
 
     }
 }
