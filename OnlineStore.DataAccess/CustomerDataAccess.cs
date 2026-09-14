@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace OnlineStore.DataAccess
@@ -25,7 +26,7 @@ namespace OnlineStore.DataAccess
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.Add("@CustomerID", System.Data.SqlDbType.Int)
+                    command.Parameters.Add("@CustomerID", SqlDbType.Int)
                                       .Value = customerId;
 
                     connection.Open();
@@ -51,14 +52,13 @@ namespace OnlineStore.DataAccess
 
             return null;
         }
-        public Customer GetByEmail(string email)
+            public Customer GetByEmail(string email)
 {
     using (SqlConnection connection = new SqlConnection(_connectionString))
     {
         string query = @"
             SELECT CustomerID,
-                   FirstName,
-                   LastName,
+                   Name,
                    Email,
                    Phone,
                    Address
@@ -79,8 +79,7 @@ namespace OnlineStore.DataAccess
                     return new Customer
                     {
                         CustomerID = (int)reader["CustomerID"],
-                        FirstName = reader["FirstName"].ToString(),
-                        LastName = reader["LastName"].ToString(),
+                        Name = reader["Name"].ToString(),
                         Email = reader["Email"].ToString(),
                         Phone = reader["Phone"].ToString(),
                         Address = reader["Address"].ToString()
@@ -92,6 +91,8 @@ namespace OnlineStore.DataAccess
 
     return null;
 }
+    
+
         public List<Customer> GetAll()
         {
             List<Customer> customers = new List<Customer>();
@@ -142,22 +143,22 @@ namespace OnlineStore.DataAccess
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.Add("@Name", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Name", SqlDbType.NVarChar, 100)
                                           .Value = customer.Name;
 
-                    command.Parameters.Add("@Email", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Email", SqlDbType.NVarChar, 100)
                                           .Value = customer.Email;
 
-                    command.Parameters.Add("@Phone", System.Data.SqlDbType.NVarChar, 20)
+                    command.Parameters.Add("@Phone", SqlDbType.NVarChar, 20)
                                           .Value = customer.Phone;
 
-                    command.Parameters.Add("@Address", System.Data.SqlDbType.NVarChar, 200)
+                    command.Parameters.Add("@Address", SqlDbType.NVarChar, 200)
                                           .Value = customer.Address;
 
-                    command.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Username", SqlDbType.NVarChar, 100)
                                           .Value = customer.Username;
 
-                    command.Parameters.Add("@Password", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Password", SqlDbType.NVarChar, 100)
                                           .Value = customer.Password;
 
                     connection.Open();
@@ -182,25 +183,25 @@ namespace OnlineStore.DataAccess
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.Add("@CustomerID", System.Data.SqlDbType.Int)
+                    command.Parameters.Add("@CustomerID", SqlDbType.Int)
                                       .Value = customer.CustomerID;
 
-                    command.Parameters.Add("@Name", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Name", SqlDbType.NVarChar, 100)
                                       .Value = customer.Name;
 
-                    command.Parameters.Add("@Email", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Email", SqlDbType.NVarChar, 100)
                                       .Value = customer.Email;
 
-                    command.Parameters.Add("@Phone", System.Data.SqlDbType.NVarChar, 20)
+                    command.Parameters.Add("@Phone", SqlDbType.NVarChar, 20)
                                       .Value = customer.Phone;
 
-                    command.Parameters.Add("@Address", System.Data.SqlDbType.NVarChar, 200)
+                    command.Parameters.Add("@Address", SqlDbType.NVarChar, 200)
                                       .Value = customer.Address;
 
-                    command.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Username", SqlDbType.NVarChar, 100)
                                       .Value = customer.Username;
 
-                    command.Parameters.Add("@Password", System.Data.SqlDbType.NVarChar, 100)
+                    command.Parameters.Add("@Password", SqlDbType.NVarChar, 100)
                                       .Value = customer.Password;
 
                     connection.Open();
@@ -209,5 +210,70 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool Delete(int customerId)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
+    {
+        string query = @"
+            DELETE FROM Customers
+            WHERE CustomerID = @CustomerID";
+
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerId;
+
+            connection.Open();
+
+            int rowsAffected = command.ExecuteNonQuery();
+
+            return rowsAffected > 0;
+        }
+    }
+}
+public bool Exists(int customerId)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
+    {
+        string query = @"
+            SELECT COUNT(1)
+            FROM Customers
+            WHERE CustomerID = @CustomerID";
+
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerId;
+
+            connection.Open();
+
+            int count = (int)command.ExecuteScalar();
+
+            return count > 0;
+        }
+    }
+}
+public bool EmailExistsForAnotherCustomer(string email, int customerId)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
+    {
+        string query = @"
+            SELECT COUNT(1)
+            FROM Customers
+            WHERE Email = @Email
+              AND CustomerID <> @CustomerID";
+
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            command.Parameters.Add("@Email", SqlDbType.NVarChar, 100).Value = email;
+            command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerId;
+
+            connection.Open();
+
+            int count = (int)command.ExecuteScalar();
+
+            return count > 0;
+        }
+    }
+}
+
     }
 }

@@ -20,7 +20,7 @@ namespace OnlineStore.DataAccess
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = @"
-                    SELECT OrderItemID, OrderID, ProductID,
+                    SELECT  OrderID, ProductID,
                            Quantity, Price
                     FROM OrderItems
                     WHERE OrderID = @OrderID";
@@ -56,7 +56,7 @@ namespace OnlineStore.DataAccess
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = @"
-            SELECT OrderItemID, OrderID, ProductID,
+            SELECT  OrderID, ProductID,
                    Quantity, Price
             FROM OrderItems
             WHERE OrderItemID = @OrderItemID";

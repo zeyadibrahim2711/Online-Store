@@ -52,7 +52,7 @@ namespace OnlineStore.DataAccess
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = @"
+                string query = @"Email
             INSERT INTO ProductImages
             (
                 ProductID,
