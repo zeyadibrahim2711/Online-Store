@@ -120,5 +120,116 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool Delete(int categoryId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            DELETE FROM ProductCategory
+            WHERE CategoryID = @CategoryID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CategoryID", System.Data.SqlDbType.Int)
+                        .Value = categoryId;
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool Exists(int categoryId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM ProductCategory
+            WHERE CategoryID = @CategoryID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CategoryID", System.Data.SqlDbType.Int)
+                        .Value = categoryId;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
+                }
+            }
+        }
+        public bool ExistsByName(string categoryName)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM ProductCategory
+            WHERE CategoryName = @CategoryName";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CategoryName", System.Data.SqlDbType.NVarChar, 100)
+                        .Value = categoryName;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
+                }
+            }
+        }
+        public bool NameExistsForAnotherCategory(string categoryName, int categoryId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM ProductCategory
+            WHERE CategoryName = @CategoryName
+              AND CategoryID <> @CategoryID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CategoryName", System.Data.SqlDbType.NVarChar, 100)
+                        .Value = categoryName;
+
+                    command.Parameters.Add("@CategoryID", System.Data.SqlDbType.Int)
+                        .Value = categoryId;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
+                }
+            }
+        }
+        public bool HasProducts(int categoryId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM ProductCatalog
+            WHERE CategoryID = @CategoryID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CategoryID", System.Data.SqlDbType.Int)
+                        .Value = categoryId;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
+                }
+            }
+        }
     }
 }
