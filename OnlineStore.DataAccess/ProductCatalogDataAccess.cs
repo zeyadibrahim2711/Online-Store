@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace OnlineStore.DataAccess
 {
-    public class ProductDataAccess
+    public class ProductCatalogDataAccess
     {
         private readonly string _connectionString =
             ConfigurationManager
@@ -169,6 +169,48 @@ namespace OnlineStore.DataAccess
                     connection.Open();
 
                     return command.ExecuteNonQuery() > 0;
+                }
+            }
+            
+        }
+        public bool Delete(int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            DELETE FROM ProductCatalog
+            WHERE ProductID = @ProductID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ProductID", System.Data.SqlDbType.Int)
+                        .Value = productId;
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool Exists(int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM ProductCatalog
+            WHERE ProductID = @ProductID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ProductID", System.Data.SqlDbType.Int)
+                        .Value = productId;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
                 }
             }
         }
