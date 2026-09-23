@@ -179,5 +179,27 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool HasOrders(int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM OrderItems
+            WHERE ProductID = @ProductID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ProductID", System.Data.SqlDbType.Int)
+                        .Value = productId;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
+                }
+            }
+        }
     }
 }
