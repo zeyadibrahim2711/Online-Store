@@ -20,7 +20,7 @@ namespace OnlineStore.DataAccess
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = @"
-                    SELECT ImageID, ProductID, ImageURL
+                    SELECT *
                     FROM ProductImages
                     WHERE ProductID = @ProductID";
 
@@ -39,7 +39,8 @@ namespace OnlineStore.DataAccess
                             {
                                 ImageID = (int)reader["ImageID"],
                                 ProductID = (int)reader["ProductID"],
-                                ImageURL = reader["ImageURL"].ToString()
+                                ImageURL = reader["ImageURL"].ToString(),
+                                Order =(int)reader["Order"]
                             });
                         }
                     }
@@ -48,20 +49,56 @@ namespace OnlineStore.DataAccess
 
             return images;
         }
+        public ProductImage GetByImageId(int imageId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT *
+            FROM ProductImages
+            WHERE ImageID = @ImageID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ImageID", System.Data.SqlDbType.Int)
+                        .Value = imageId;
+
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new ProductImage
+                            {
+                                ImageID = (int)reader["ImageID"],
+                                ProductID = (int)reader["ProductID"],
+                                ImageURL = reader["ImageURL"].ToString(),
+                                Order =(int)reader["Order"]
+                            };
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
         public int Add(ProductImage image)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = @"Email
+                string query = @"
             INSERT INTO ProductImages
             (
                 ProductID,
-                ImageURL
+                ImageURL,
+                [Order]
             )
             VALUES
             (
                 @ProductID,
-                @ImageURL
+                @ImageURL,
+                @Order
             );
 
             SELECT SCOPE_IDENTITY();";
@@ -69,14 +106,44 @@ namespace OnlineStore.DataAccess
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.Add("@ProductID", System.Data.SqlDbType.Int)
-                                      .Value = image.ProductID;
+                        .Value = image.ProductID;
 
                     command.Parameters.Add("@ImageURL", System.Data.SqlDbType.NVarChar, 500)
-                                      .Value = image.ImageURL;
-
+                        .Value = image.ImageURL;
+                    
+                    
+                    command.Parameters.Add("@Order", System.Data.SqlDbType.Int)
+                        .Value = image.Order;
                     connection.Open();
 
                     return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+        }
+        public bool Update(ProductImage image)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            UPDATE ProductImages
+            SET ImageURL = @ImageURL,
+                [Order] = @Order
+            WHERE ImageID = @ImageID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ImageID", System.Data.SqlDbType.Int)
+                        .Value = image.ImageID;
+
+                    command.Parameters.Add("@ImageURL", System.Data.SqlDbType.NVarChar, 500)
+                        .Value = image.ImageURL;
+
+                    command.Parameters.Add("@Order", System.Data.SqlDbType.Int)
+                        .Value = image.Order;
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
                 }
             }
         }
@@ -96,6 +163,28 @@ namespace OnlineStore.DataAccess
                     connection.Open();
 
                     return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool Exists(int imageId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM ProductImages
+            WHERE ImageID = @ImageID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ImageID", System.Data.SqlDbType.Int)
+                        .Value = imageId;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
                 }
             }
         }
