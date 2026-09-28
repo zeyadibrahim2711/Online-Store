@@ -7,5 +7,7 @@
         public int ProductID { get; set; }
 
         public string ImageURL { get; set; }
+        
+        public int Order { get; set; }
     }
 }
