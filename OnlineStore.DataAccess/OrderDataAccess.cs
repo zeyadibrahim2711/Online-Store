@@ -135,8 +135,7 @@ namespace OnlineStore.DataAccess
             {
                 string query = @"
             UPDATE Orders
-            SET CustomerID = @CustomerID,
-                OrderDate = @OrderDate,
+            SET OrderDate = @OrderDate,
                 TotalAmount = @TotalAmount,
                 Status = @Status
             WHERE OrderID = @OrderID";
@@ -146,9 +145,6 @@ namespace OnlineStore.DataAccess
                     command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
                                       .Value = order.OrderID;
 
-                    command.Parameters.Add("@CustomerID", System.Data.SqlDbType.Int)
-                                      .Value = order.CustomerID;
-
                     command.Parameters.Add("@OrderDate", System.Data.SqlDbType.DateTime)
                                       .Value = order.OrderDate;
 
@@ -157,6 +153,29 @@ namespace OnlineStore.DataAccess
 
                     command.Parameters.Add("@Status", System.Data.SqlDbType.NVarChar, 50)
                                       .Value = order.Status.ToString();
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool Cancel(int orderId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            UPDATE Orders
+            SET Status = @Status
+            WHERE OrderID = @OrderID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
+                        .Value = orderId;
+
+                    command.Parameters.Add("@Status", System.Data.SqlDbType.NVarChar, 50)
+                        .Value = nameof(OrderStatus.Cancelled);
 
                     connection.Open();
 
@@ -184,6 +203,28 @@ namespace OnlineStore.DataAccess
         }
     }
 }
+        public bool Exists(int orderId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM Orders
+            WHERE OrderID = @OrderID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
+                        .Value = orderId;
+
+                    connection.Open();
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0;
+                }
+            }
+        }
         
     }
 }
