@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineStore.Models
 {
@@ -21,5 +22,6 @@ namespace OnlineStore.Models
         public decimal TotalAmount { get; set; }
 
         public OrderStatus Status { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
     }
 }
