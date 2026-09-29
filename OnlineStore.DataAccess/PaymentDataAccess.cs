@@ -21,7 +21,7 @@ namespace OnlineStore.DataAccess
             {
                 string query = @"
             SELECT PaymentID, OrderID, Amount,
-                   PaymentMethod, PaymentDate
+                   PaymentMethod, PaymentDate, Status
             FROM Payments
             WHERE PaymentID = @PaymentID";
 
@@ -42,7 +42,10 @@ namespace OnlineStore.DataAccess
                                 OrderID = (int)reader["OrderID"],
                                 Amount = (decimal)reader["Amount"],
                                 PaymentMethod = reader["PaymentMethod"].ToString(),
-                                PaymentDate = (DateTime)reader["PaymentDate"]
+                                PaymentDate = (DateTime)reader["PaymentDate"],
+                                Status = (Payment.PaymentStatus)Enum.Parse(
+                                    typeof(Payment.PaymentStatus),
+                                    reader["Status"].ToString())
                             };
                         }
                     }
@@ -59,7 +62,7 @@ namespace OnlineStore.DataAccess
             {
                 string query = @"
             SELECT PaymentID, OrderID, Amount,
-                   PaymentMethod, PaymentDate
+                   PaymentMethod, PaymentDate,Status
             FROM Payments
             WHERE OrderID = @OrderID";
 
@@ -80,7 +83,51 @@ namespace OnlineStore.DataAccess
                                 OrderID = (int)reader["OrderID"],
                                 Amount = (decimal)reader["Amount"],
                                 PaymentMethod = reader["PaymentMethod"].ToString(),
-                                PaymentDate = (DateTime)reader["PaymentDate"]
+                                PaymentDate = (DateTime)reader["PaymentDate"],
+                                Status = (Payment.PaymentStatus)Enum.Parse(
+                                    typeof(Payment.PaymentStatus),
+                                    reader["Status"].ToString())
+                            });
+                        }
+                    }
+                }
+            }
+
+            return payments;
+        }
+        public List<Payment> GetAll()
+        {
+            List<Payment> payments = new List<Payment>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT PaymentID,
+                   OrderID,
+                   Amount,
+                   PaymentMethod,
+                   PaymentDate,
+                   Status
+            FROM Payments";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            payments.Add(new Payment
+                            {
+                                PaymentID = (int)reader["PaymentID"],
+                                OrderID = (int)reader["OrderID"],
+                                Amount = (decimal)reader["Amount"],
+                                PaymentMethod = reader["PaymentMethod"].ToString(),
+                                PaymentDate = (DateTime)reader["PaymentDate"],
+                                Status = (Payment.PaymentStatus)Enum.Parse(
+                                    typeof(Payment.PaymentStatus),
+                                    reader["Status"].ToString())
                             });
                         }
                     }
@@ -99,14 +146,16 @@ namespace OnlineStore.DataAccess
                 OrderID,
                 Amount,
                 PaymentMethod,
-                PaymentDate
+                PaymentDate,
+                Status
             )
             VALUES
             (
                 @OrderID,
                 @Amount,
                 @PaymentMethod,
-                @PaymentDate
+                @PaymentDate,
+                @Status
             );
 
             SELECT SCOPE_IDENTITY();";
@@ -124,6 +173,8 @@ namespace OnlineStore.DataAccess
 
                     command.Parameters.Add("@PaymentDate", System.Data.SqlDbType.DateTime)
                                       .Value = payment.PaymentDate;
+                    command.Parameters.Add("@Status", System.Data.SqlDbType.NVarChar, 50)
+                        .Value = payment.Status.ToString();
 
                     connection.Open();
 
@@ -138,7 +189,8 @@ namespace OnlineStore.DataAccess
                 string query = @"
             UPDATE Payments
             SET PaymentMethod = @PaymentMethod,
-                PaymentDate = @PaymentDate
+                PaymentDate = @PaymentDate,
+                Status = @Status
             WHERE PaymentID = @PaymentID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -151,10 +203,34 @@ namespace OnlineStore.DataAccess
 
                     command.Parameters.Add("@PaymentDate", System.Data.SqlDbType.DateTime)
                                       .Value = payment.PaymentDate;
+                    
+                    command.Parameters.Add("@Status", System.Data.SqlDbType.NVarChar, 50)
+                        .Value = payment.Status.ToString();
 
                     connection.Open();
 
                     return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool HasSuccessfulPayment(int orderId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(1)
+            FROM Payments
+            WHERE OrderID = @OrderID
+              AND Status = 'Successful'";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
+                        .Value = orderId;
+
+                    connection.Open();
+
+                    return Convert.ToInt32(command.ExecuteScalar()) > 0;
                 }
             }
         }
