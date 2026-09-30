@@ -234,6 +234,47 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool Exists(int paymentId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Payments
+            WHERE PaymentID = @PaymentID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@PaymentID", System.Data.SqlDbType.Int)
+                        .Value = paymentId;
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
+                }
+            }
+        }
+        public bool IsSuccessful(int paymentId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Payments
+            WHERE PaymentID = @PaymentID
+              AND Status = 'Successful'";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@PaymentID", System.Data.SqlDbType.Int)
+                        .Value = paymentId;
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
+                }
+            }
+        }
 
     }
 }
