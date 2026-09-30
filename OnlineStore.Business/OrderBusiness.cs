@@ -16,10 +16,10 @@ namespace OnlineStore.Business
 
         public int Add(Order order)
         {
-            if (!_customerDataAccess.Exists(order.CustomerID))
+            if (!_customerDataAccess.Exists(order.CustomerID) ||
+                order.OrderItems == null || order.OrderItems.Count == 0)
                 return -1;
-            if (order.OrderItems == null || order.OrderItems.Count == 0)
-                return -1;
+
             return _orderDataAccess.Add(order);
         }
         

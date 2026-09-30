@@ -1,6 +1,7 @@
 ﻿using OnlineStore.DataAccess;
 using OnlineStore.Models;
 using System.Collections.Generic;
+
 namespace OnlineStore.Business
 {
     public class ProductCategoryBusiness
@@ -19,28 +20,26 @@ namespace OnlineStore.Business
 
             return _productCategoryDataAccess.Add(category);
         }
-        
+
         public bool Update(ProductCategory category)
         {
-            if (!_productCategoryDataAccess.Exists(category.CategoryID))
-                return false;
-
-            if (_productCategoryDataAccess.NameExistsForAnotherCategory(
+            if (!_productCategoryDataAccess.Exists(category.CategoryID) ||
+                _productCategoryDataAccess.NameExistsForAnotherCategory(
                     category.CategoryName, category.CategoryID))
                 return false;
 
             return _productCategoryDataAccess.Update(category);
         }
+
         public bool Delete(int categoryId)
         {
-            if (!_productCategoryDataAccess.Exists(categoryId))
-                return false;
-
-            if (_productCategoryDataAccess.HasProducts(categoryId))
+            if (!_productCategoryDataAccess.Exists(categoryId) ||
+                _productCategoryDataAccess.HasProducts(categoryId))
                 return false;
 
             return _productCategoryDataAccess.Delete(categoryId);
         }
+
         public ProductCategory GetById(int categoryId)
         {
             if (categoryId <= 0)
@@ -48,6 +47,7 @@ namespace OnlineStore.Business
 
             return _productCategoryDataAccess.GetById(categoryId);
         }
+
         public List<ProductCategory> GetAll()
         {
             return _productCategoryDataAccess.GetAll();
