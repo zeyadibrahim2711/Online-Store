@@ -225,6 +225,47 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool Confirm(int orderId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            UPDATE Orders
+            SET Status = 'Confirmed'
+            WHERE OrderID = @OrderID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
+                        .Value = orderId;
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool IsConfirmed(int orderId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Orders
+            WHERE OrderID = @OrderID
+              AND Status = 'Confirmed'";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
+                        .Value = orderId;
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
+                }
+            }
+        }
         
     }
 }
