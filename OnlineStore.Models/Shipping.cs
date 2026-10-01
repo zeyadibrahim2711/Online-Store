@@ -9,7 +9,8 @@ namespace OnlineStore.Models
             Pending,
             Shipped,
             InTransit,
-            Delivered
+            Delivered,
+            Cancelled
         }
 
         public int ShippingID { get; set; }
