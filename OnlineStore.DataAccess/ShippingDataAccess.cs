@@ -110,6 +110,53 @@ namespace OnlineStore.DataAccess
 
             return null;
         }
+        public List<Shipping> GetAll()
+        {
+            List<Shipping> shippings = new List<Shipping>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT ShippingID,
+                   OrderID,
+                   CarrierName,
+                   TrackingNumber,
+                   Status,
+                   EstimatedDeliveryDate,
+                   ActualDeliveryDate
+            FROM Shippings";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            shippings.Add(new Shipping
+                            {
+                                ShippingID = (int)reader["ShippingID"],
+                                OrderID = (int)reader["OrderID"],
+                                CarrierName = reader["CarrierName"].ToString(),
+                                TrackingNumber = reader["TrackingNumber"].ToString(),
+                                Status = (Shipping.ShippingStatus)Enum.Parse(
+                                    typeof(Shipping.ShippingStatus),
+                                    reader["Status"].ToString()),
+                                EstimatedDeliveryDate =
+                                    (DateTime)reader["EstimatedDeliveryDate"],
+                                ActualDeliveryDate =
+                                    reader["ActualDeliveryDate"] == DBNull.Value
+                                        ? null
+                                        : (DateTime?)reader["ActualDeliveryDate"]
+                            });
+                        }
+                    }
+                }
+            }
+
+            return shippings;
+        }
         public int Add(Shipping shipping)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -210,6 +257,73 @@ namespace OnlineStore.DataAccess
                     connection.Open();
 
                     return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool Cancel(int shippingId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            UPDATE Shippings
+            SET Status = @Status
+            WHERE ShippingID = @ShippingID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ShippingID", SqlDbType.Int)
+                        .Value = shippingId;
+
+                    command.Parameters.Add("@Status", SqlDbType.NVarChar, 50)
+                        .Value = Shipping.ShippingStatus.Cancelled.ToString();
+
+                    connection.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        public bool Exists(int shippingId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Shippings
+            WHERE ShippingID = @ShippingID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ShippingID", SqlDbType.Int)
+                        .Value = shippingId;
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
+                }
+            }
+        }
+        public bool ExistsActiveByOrderId(int orderId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Shippings
+            WHERE OrderID = @OrderID
+              AND Status != @Status";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@OrderID", SqlDbType.Int)
+                        .Value = orderId;
+
+                    command.Parameters.Add("@Status", SqlDbType.NVarChar, 50)
+                        .Value = Shipping.ShippingStatus.Cancelled.ToString();
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
                 }
             }
         }
