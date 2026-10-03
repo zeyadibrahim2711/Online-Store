@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using OnlineStore.Models;
@@ -8,13 +9,11 @@ namespace OnlineStore.DataAccess
 {
     public class ReviewDataAccess
     {
-        private readonly string _connectionString;
-
-        public ReviewDataAccess(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
+        private readonly string _connectionString =
+            ConfigurationManager
+                .ConnectionStrings["OnlineStoreConnection"]
+                .ConnectionString;
+        
         public Review GetById(int reviewId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -212,6 +211,51 @@ namespace OnlineStore.DataAccess
                     connection.Open();
 
                     return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        
+        public bool Exists(int reviewId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Reviews
+            WHERE ReviewID = @ReviewID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ReviewID", SqlDbType.Int)
+                        .Value = reviewId;
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
+                }
+            }
+        }
+        public bool ExistsByCustomerAndProduct(int customerId, int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Reviews
+            WHERE CustomerID = @CustomerID
+              AND ProductID = @ProductID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CustomerID", SqlDbType.Int)
+                        .Value = customerId;
+
+                    command.Parameters.Add("@ProductID", SqlDbType.Int)
+                        .Value = productId;
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
                 }
             }
         }
