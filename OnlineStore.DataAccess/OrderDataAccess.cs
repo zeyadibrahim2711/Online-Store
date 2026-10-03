@@ -266,6 +266,36 @@ namespace OnlineStore.DataAccess
                 }
             }
         }
+        public bool HasPurchasedProduct(int customerId, int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM Orders o
+            INNER JOIN OrderItems oi
+                ON o.OrderID = oi.OrderID
+            WHERE o.CustomerID = @CustomerID
+              AND oi.ProductID = @ProductID
+              AND o.Status = @Status";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CustomerID", SqlDbType.Int)
+                        .Value = customerId;
+
+                    command.Parameters.Add("@ProductID", SqlDbType.Int)
+                        .Value = productId;
+
+                    command.Parameters.Add("@Status", SqlDbType.Int)
+                        .Value = (int)Order.OrderStatus.Delivered;
+
+                    connection.Open();
+
+                    return (int)command.ExecuteScalar() > 0;
+                }
+            }
+        }
         
     }
 }
