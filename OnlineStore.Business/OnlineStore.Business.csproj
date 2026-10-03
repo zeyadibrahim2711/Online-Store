@@ -49,6 +49,7 @@
     <Compile Include="ProductCategoryBusiness.cs" />
     <Compile Include="ProductImageBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReviewBusiness.cs" />
     <Compile Include="ShippingBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
