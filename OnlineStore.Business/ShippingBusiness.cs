@@ -34,55 +34,53 @@ namespace OnlineStore.Business
             
             return _shippingDataAccess.Add(shipping);
         }
-        public bool Update(Shipping shipping)
+        public bool Update(Shipping newShipping)
         {
-            if (shipping == null ||
-                shipping.ShippingID <= 0 ||
-                !_shippingDataAccess.Exists(shipping.ShippingID))
+            if (newShipping == null ||
+                newShipping.ShippingID <= 0 ||
+                !_shippingDataAccess.Exists(newShipping.ShippingID))
             {
                 return false;
             }
 
             Shipping existingShipping =
-                _shippingDataAccess.GetById(shipping.ShippingID);
+                _shippingDataAccess.GetById(newShipping.ShippingID);
 
-            if (existingShipping.Status == Shipping.ShippingStatus.Pending &&
-                shipping.Status != Shipping.ShippingStatus.Shipped &&
-                shipping.Status != Shipping.ShippingStatus.Cancelled)
+            bool validStatus;
+            switch (existingShipping.Status)
+            {
+                case Shipping.ShippingStatus.Pending:
+                    validStatus = newShipping.Status == Shipping.ShippingStatus.Shipped ||
+                                  newShipping.Status == Shipping.ShippingStatus.Cancelled;
+                    break;
+                case Shipping.ShippingStatus.Shipped:
+                    validStatus = newShipping.Status == Shipping.ShippingStatus.InTransit ||
+                                  newShipping.Status == Shipping.ShippingStatus.Cancelled;
+                    break;
+                case Shipping.ShippingStatus.InTransit:
+                    validStatus = newShipping.Status == Shipping.ShippingStatus.Delivered ||
+                                  newShipping.Status == Shipping.ShippingStatus.Cancelled;
+                    break;
+                case Shipping.ShippingStatus.Delivered:
+                case Shipping.ShippingStatus.Cancelled:
+                default:
+                    validStatus = false;
+                    break;
+            }
+
+            if (!validStatus)
+                return false;
+
+            if (newShipping.Status == Shipping.ShippingStatus.Delivered &&
+                !newShipping.ActualDeliveryDate.HasValue)
             {
                 return false;
             }
 
-            if (existingShipping.Status == Shipping.ShippingStatus.Shipped &&
-                shipping.Status != Shipping.ShippingStatus.InTransit &&
-                shipping.Status != Shipping.ShippingStatus.Cancelled)
-            {
-                return false;
-            }
+            if (newShipping.Status != Shipping.ShippingStatus.Delivered)
+                newShipping.ActualDeliveryDate = null;
 
-            if (existingShipping.Status == Shipping.ShippingStatus.InTransit &&
-                shipping.Status != Shipping.ShippingStatus.Delivered &&
-                shipping.Status != Shipping.ShippingStatus.Cancelled)
-            {
-                return false;
-            }
-
-            if (existingShipping.Status == Shipping.ShippingStatus.Delivered ||
-                existingShipping.Status == Shipping.ShippingStatus.Cancelled)
-            {
-                return false;
-            }
-
-            if (shipping.Status == Shipping.ShippingStatus.Delivered &&
-                !shipping.ActualDeliveryDate.HasValue)
-            {
-                return false;
-            }
-
-            if (shipping.Status != Shipping.ShippingStatus.Delivered)
-                shipping.ActualDeliveryDate = null;
-
-            return _shippingDataAccess.Update(shipping);
+            return _shippingDataAccess.Update(newShipping);
         }
         public bool Cancel(int shippingId)
         {
