@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartDataAccess.cs" />
+    <Compile Include="CartItemDataAccess.cs" />
     <Compile Include="CustomerDataAccess.cs" />
     <Compile Include="Data\DatabaseConnection.cs" />
     <Compile Include="OrderDataAccess.cs" />
