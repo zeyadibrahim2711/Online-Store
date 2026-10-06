@@ -14,17 +14,27 @@ namespace OnlineStore.Business
             _productImageDataAccess = new ProductImageDataAccess();
             _productCatalogDataAccess = new ProductCatalogDataAccess();
         }
+        private bool IsValidImage(ProductImage image)
+        {
+            return image != null &&
+                   !string.IsNullOrWhiteSpace(image.ImageURL) &&
+                   image.Order >= 0;
+        }
 
         public int Add(ProductImage image)
         {
-            if (!_productCatalogDataAccess.Exists(image.ProductID))
+            if (!IsValidImage(image) ||
+                image.ProductID <= 0 ||
+                !_productCatalogDataAccess.Exists(image.ProductID))
                 return -1;
 
             return _productImageDataAccess.Add(image);
         }
         public bool Update(ProductImage image)
         {
-            if (!_productImageDataAccess.Exists(image.ImageID))
+            if (!IsValidImage(image) ||
+                image.ImageID <= 0 ||
+                !_productImageDataAccess.Exists(image.ImageID))
                 return false;
 
             return _productImageDataAccess.Update(image);
