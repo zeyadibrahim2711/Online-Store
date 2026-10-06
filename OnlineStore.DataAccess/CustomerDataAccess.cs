@@ -91,6 +91,47 @@ namespace OnlineStore.DataAccess
 
     return null;
 }
+public Customer GetByUsername(string username)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
+    {
+        string query = @"
+            SELECT CustomerID,
+                   Name,
+                   Email,
+                   Phone,
+                   Address,
+                   Username
+            FROM Customers
+            WHERE Username = @Username";
+
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            command.Parameters.Add("@Username", SqlDbType.NVarChar, 100)
+                .Value = username;
+
+            connection.Open();
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new Customer
+                    {
+                        CustomerID = (int)reader["CustomerID"],
+                        Name = reader["Name"].ToString(),
+                        Email = reader["Email"].ToString(),
+                        Phone = reader["Phone"].ToString(),
+                        Address = reader["Address"].ToString(),
+                        Username = reader["Username"].ToString(),
+                    };
+                }
+            }
+        }
+    }
+
+    return null;
+}
     
 
         public List<Customer> GetAll()
@@ -271,6 +312,27 @@ public bool EmailExistsForAnotherCustomer(string email, int customerId)
             int count = (int)command.ExecuteScalar();
 
             return count > 0;
+        }
+    }
+}
+public bool UsernameExistsForAnotherCustomer(string username, int customerId)
+{
+    using (SqlConnection connection = new SqlConnection(_connectionString))
+    {
+        string query = @"
+            SELECT COUNT(*)
+            FROM Customers
+            WHERE Username = @Username
+              AND CustomerID <> @CustomerID";
+
+        using (SqlCommand command = new SqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@Username", username);
+            command.Parameters.AddWithValue("@CustomerID", customerId);
+
+            connection.Open();
+
+            return (int)command.ExecuteScalar() > 0;
         }
     }
 }
