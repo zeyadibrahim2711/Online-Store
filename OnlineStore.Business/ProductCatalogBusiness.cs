@@ -16,12 +16,18 @@ namespace OnlineStore.Business
             _productCategoryDataAccess = new ProductCategoryDataAccess();
             _orderItemDataAccess = new OrderItemDataAccess();
         }
+        private bool IsValidProduct(Product product)
+        {
+            return product != null &&
+                   !string.IsNullOrWhiteSpace(product.ProductName) &&
+                   product.Price > 0 &&
+                   product.QuantityInStock >= 0 &&
+                   _productCategoryDataAccess.Exists(product.CategoryID);
+        }
 
         public int Add(Product product)
         {
-            if (!_productCategoryDataAccess.Exists(product.CategoryID) ||
-                product.Price <= 0 ||
-                product.QuantityInStock < 0)
+            if (!IsValidProduct(product))
                 return -1;
 
             return _productCatalogDataAccess.Add(product);
@@ -30,9 +36,7 @@ namespace OnlineStore.Business
         public bool Update(Product product)
         {
             if (!_productCatalogDataAccess.Exists(product.ProductID) ||
-                !_productCategoryDataAccess.Exists(product.CategoryID) ||
-                product.Price <= 0 ||
-                product.QuantityInStock < 0)
+                !IsValidProduct(product))
                 return false;
 
             return _productCatalogDataAccess.Update(product);
