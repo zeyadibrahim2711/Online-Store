@@ -12,9 +12,16 @@ namespace OnlineStore.Business
         {
             _productCategoryDataAccess = new ProductCategoryDataAccess();
         }
+        private bool IsValidCategory(ProductCategory category)
+        {
+            return category != null &&
+                   !string.IsNullOrWhiteSpace(category.CategoryName);
+        }
 
         public int Add(ProductCategory category)
         {
+            if (!IsValidCategory(category))
+                return -1;
             if (_productCategoryDataAccess.ExistsByName(category.CategoryName))
                 return -1;
 
@@ -23,6 +30,8 @@ namespace OnlineStore.Business
 
         public bool Update(ProductCategory category)
         {
+            if (!IsValidCategory(category))
+                return false;
             if (!_productCategoryDataAccess.Exists(category.CategoryID) ||
                 _productCategoryDataAccess.NameExistsForAnotherCategory(
                     category.CategoryName, category.CategoryID))
