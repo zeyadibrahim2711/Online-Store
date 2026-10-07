@@ -16,16 +16,17 @@ namespace OnlineStore.Business
             _cartDataAccess = new CartDataAccess();
             _productDataAccess = new ProductCatalogDataAccess();
         }
-
+        private bool IsValidCartItem(CartItem cartItem)
+        {
+            return cartItem != null &&
+                   cartItem.CartID > 0 &&
+                   cartItem.ProductID > 0 &&
+                   cartItem.Quantity > 0;
+        }
         public bool Add(CartItem cartItem)
         {
-            if (cartItem == null ||
-                cartItem.CartID <= 0 ||
-                cartItem.ProductID <= 0 ||
-                cartItem.Quantity <= 0)
-            {
+            if (!IsValidCartItem(cartItem))
                 return false;
-            }
 
             if (!_cartDataAccess.IsCartExists(cartItem.CartID))
             {
@@ -51,13 +52,8 @@ namespace OnlineStore.Business
         }
         public bool Update(CartItem cartItem)
         {
-            if (cartItem == null ||
-                cartItem.CartID <= 0 ||
-                cartItem.ProductID <= 0 ||
-                cartItem.Quantity <= 0)
-            {
+            if (!IsValidCartItem(cartItem))
                 return false;
-            }
 
             Product product = _productDataAccess.GetById(cartItem.ProductID);
 
