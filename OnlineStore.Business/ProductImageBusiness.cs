@@ -41,7 +41,7 @@ namespace OnlineStore.Business
         }
         public bool Delete(int imageId)
         {
-            if (!_productImageDataAccess.Exists(imageId))
+            if (imageId <= 0 ||!_productImageDataAccess.Exists(imageId))
                 return false;
             
             return _productImageDataAccess.Delete(imageId);
