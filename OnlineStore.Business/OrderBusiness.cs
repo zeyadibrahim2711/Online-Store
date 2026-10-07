@@ -13,11 +13,17 @@ namespace OnlineStore.Business
             _orderDataAccess = new OrderDataAccess();
             _customerDataAccess = new CustomerDataAccess();
         }
-
+        private bool IsValidOrder(Order order)
+        {
+            return order != null &&
+                   order.CustomerID > 0 &&
+                   _customerDataAccess.Exists(order.CustomerID) &&
+                   order.OrderItems != null &&
+                   order.OrderItems.Count > 0;
+        }
         public int Add(Order order)
         {
-            if (!_customerDataAccess.Exists(order.CustomerID) ||
-                order.OrderItems == null || order.OrderItems.Count == 0)
+            if (!IsValidOrder(order))
                 return -1;
 
             return _orderDataAccess.Add(order);
@@ -25,14 +31,16 @@ namespace OnlineStore.Business
         
         public bool Update(Order order)
         {
-            if (!_orderDataAccess.Exists(order.OrderID))
+            if (order == null ||
+                order.OrderID <= 0 ||!_orderDataAccess.Exists(order.OrderID))
                 return false;
 
             return _orderDataAccess.Update(order);
         }
         public bool Cancel(int orderId)
         {
-            if (!_orderDataAccess.Exists(orderId))
+            if (orderId <= 0 ||
+                !_orderDataAccess.Exists(orderId))
                 return false;
 
             return _orderDataAccess.Cancel(orderId);
