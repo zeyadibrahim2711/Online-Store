@@ -14,16 +14,20 @@ namespace OnlineStore.Business
             _cartDataAccess = new CartDataAccess();
             _customerDataAccess = new CustomerDataAccess();
         }
-
+        private bool IsValidCart(Cart cart)
+        {
+            return cart != null &&
+                   cart.CustomerID > 0 &&
+                   _customerDataAccess.Exists(cart.CustomerID);
+        }
         public int Add(Cart cart)
         {
-            if (cart == null ||
-                cart.CustomerID <= 0 ||
-                !_customerDataAccess.Exists(cart.CustomerID) ||//not exist
-                _cartDataAccess.GetByCustomerId(cart.CustomerID) != null)//exist
+            if (!IsValidCart(cart) ||
+                _cartDataAccess.GetByCustomerId(cart.CustomerID) != null)
             {
                 return -1;
             }
+
 
             return _cartDataAccess.Add(cart);
         }
