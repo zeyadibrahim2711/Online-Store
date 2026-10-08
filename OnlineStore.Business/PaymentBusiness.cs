@@ -14,11 +14,16 @@ namespace OnlineStore.Business
             _paymentDataAccess = new PaymentDataAccess();
             _orderDataAccess = new OrderDataAccess();
         }
-
+        private bool IsValidPayment(Payment payment)
+        {
+            return payment != null &&
+                   payment.OrderID > 0 &&
+                   payment.Amount > 0 &&
+                   _orderDataAccess.Exists(payment.OrderID);
+        }
         public int Add(Payment payment)
         {
-            if (payment.Amount <= 0 ||
-                !_orderDataAccess.Exists(payment.OrderID) ||
+            if (!IsValidPayment(payment)||
                 _paymentDataAccess.HasSuccessfulPayment(payment.OrderID))
                 return -1;
 
@@ -35,8 +40,7 @@ namespace OnlineStore.Business
         }
         public bool Update(Payment payment)
         {
-            if (payment == null ||
-                !_paymentDataAccess.Exists(payment.PaymentID))
+            if (payment.PaymentID <= 0||!IsValidPayment(payment))
             {
                 return false;
             }
