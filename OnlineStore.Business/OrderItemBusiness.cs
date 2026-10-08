@@ -16,10 +16,17 @@ namespace OnlineStore.Business
             _orderDataAccess = new OrderDataAccess();
             _productCatalogDataAccess = new ProductCatalogDataAccess();
         }
+        private bool IsValidOrderItem(OrderItem item)
+        {
+            return item != null &&
+                   item.OrderID > 0 &&
+                   item.ProductID > 0 &&
+                   item.Quantity > 0;
+        }
 
         public bool Add(OrderItem item)
         {
-            if (item.Quantity <= 0 ||
+            if (!IsValidOrderItem(item)||
                 !_orderDataAccess.Exists(item.OrderID) ||
                 !_productCatalogDataAccess.Exists(item.ProductID))
                 return false;
@@ -34,7 +41,7 @@ namespace OnlineStore.Business
 
         public bool Update(OrderItem item)
         {
-            if (item.Quantity <= 0 ||
+            if (!IsValidOrderItem(item) ||
                 !_orderItemDataAccess.Exists(item.OrderID, item.ProductID))
                 return false;
 
