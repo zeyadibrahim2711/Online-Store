@@ -20,17 +20,18 @@ namespace OnlineStore.Business
             _productDataAccess = new ProductCatalogDataAccess();
             _orderDataAccess = new OrderDataAccess();
         }
-
+        private bool IsValidReview(Review review)
+        {
+            return review != null &&
+                   review.CustomerID > 0 &&
+                   review.ProductID > 0 &&
+                   review.Rating >= 1 &&
+                   review.Rating <= 5;
+        }
         public int Add(Review review)
         {
-            if (review == null ||
-                review.CustomerID <= 0 ||
-                review.ProductID <= 0 ||
-                review.Rating < 1 ||
-                review.Rating > 5)
-            {
+            if (!IsValidReview(review))
                 return -1;
-            }
 
             if (!_customerDataAccess.Exists(review.CustomerID) ||
                 !_productDataAccess.Exists(review.ProductID))
@@ -48,14 +49,9 @@ namespace OnlineStore.Business
         }
         public bool Update(Review review)
         {
-            if (review == null ||
-                review.ReviewID <= 0 ||
-                review.Rating < 1 ||
-                review.Rating > 5)
-            {
+            if (!IsValidReview(review)||review.ReviewID<=0)
                 return false;
-            }
-
+            
             if (!_reviewDataAccess.Exists(review.ReviewID))
                 return false;
 
