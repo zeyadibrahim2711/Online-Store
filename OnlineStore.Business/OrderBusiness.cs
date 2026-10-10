@@ -21,6 +21,30 @@ namespace OnlineStore.Business
                    order.OrderItems != null &&
                    order.OrderItems.Count > 0;
         }
+        private bool IsValidStatusTransition(
+            Order.OrderStatus currentStatus,
+            Order.OrderStatus newStatus)
+        {
+            switch (currentStatus)
+            {
+                case Order.OrderStatus.Pending:
+                    return newStatus == Order.OrderStatus.Confirmed ||
+                           newStatus == Order.OrderStatus.Cancelled;
+
+                case Order.OrderStatus.Confirmed:
+                    return newStatus == Order.OrderStatus.Shipped ||
+                           newStatus == Order.OrderStatus.Cancelled;
+
+                case Order.OrderStatus.Shipped:
+                    return newStatus == Order.OrderStatus.Delivered ||
+                           newStatus == Order.OrderStatus.Cancelled;
+
+                case Order.OrderStatus.Delivered:
+                case Order.OrderStatus.Cancelled:
+                default:
+                    return false;
+            }
+        }
         public int Add(Order order)
         {
             if (!IsValidOrder(order))
@@ -34,7 +58,11 @@ namespace OnlineStore.Business
             if (order == null ||
                 order.OrderID <= 0 ||!_orderDataAccess.Exists(order.OrderID))
                 return false;
-
+            
+            Order existingOrder = _orderDataAccess.GetById(order.OrderID);
+            if (!IsValidStatusTransition(existingOrder.Status, order.Status))
+                return false;
+            
             return _orderDataAccess.Update(order);
         }
         public bool Cancel(int orderId)
