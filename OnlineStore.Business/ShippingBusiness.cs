@@ -16,12 +16,39 @@ namespace OnlineStore.Business
             _orderDataAccess = new OrderDataAccess();
             _paymentDataAccess = new PaymentDataAccess();
         }
+        private bool IsValidShipping(Shipping shipping)
+        {
+            return shipping != null &&
+                   shipping.OrderID > 0;
+        }
+        private bool IsValidStatusTransition(
+            Shipping.ShippingStatus currentStatus,
+            Shipping.ShippingStatus newStatus)
+        {
+            switch (currentStatus)
+            {
+                case Shipping.ShippingStatus.Pending:
+                    return newStatus == Shipping.ShippingStatus.Shipped ||
+                           newStatus == Shipping.ShippingStatus.Cancelled;
 
+                case Shipping.ShippingStatus.Shipped:
+                    return newStatus == Shipping.ShippingStatus.InTransit ||
+                           newStatus == Shipping.ShippingStatus.Cancelled;
+
+                case Shipping.ShippingStatus.InTransit:
+                    return newStatus == Shipping.ShippingStatus.Delivered ||
+                           newStatus == Shipping.ShippingStatus.Cancelled;
+
+                case Shipping.ShippingStatus.Delivered:
+                case Shipping.ShippingStatus.Cancelled:
+                default:
+                    return false;
+            }
+        }
     
         public int Add(Shipping shipping)
         {
-            if (shipping == null ||
-                shipping.OrderID <= 0 ||
+            if (!IsValidShipping(shipping) ||
                 !_orderDataAccess.Exists(shipping.OrderID))
             {
                 return -1;
@@ -46,31 +73,12 @@ namespace OnlineStore.Business
             Shipping existingShipping =
                 _shippingDataAccess.GetById(newShipping.ShippingID);
 
-            bool validStatus;
-            switch (existingShipping.Status)
+            if (existingShipping == null ||
+                !IsValidStatusTransition(existingShipping.Status, newShipping.Status))
             {
-                case Shipping.ShippingStatus.Pending:
-                    validStatus = newShipping.Status == Shipping.ShippingStatus.Shipped ||
-                                  newShipping.Status == Shipping.ShippingStatus.Cancelled;
-                    break;
-                case Shipping.ShippingStatus.Shipped:
-                    validStatus = newShipping.Status == Shipping.ShippingStatus.InTransit ||
-                                  newShipping.Status == Shipping.ShippingStatus.Cancelled;
-                    break;
-                case Shipping.ShippingStatus.InTransit:
-                    validStatus = newShipping.Status == Shipping.ShippingStatus.Delivered ||
-                                  newShipping.Status == Shipping.ShippingStatus.Cancelled;
-                    break;
-                case Shipping.ShippingStatus.Delivered:
-                case Shipping.ShippingStatus.Cancelled:
-                default:
-                    validStatus = false;
-                    break;
-            }
-
-            if (!validStatus)
                 return false;
-
+            }
+            
             if (newShipping.Status == Shipping.ShippingStatus.Delivered &&
                 !newShipping.ActualDeliveryDate.HasValue)
             {
