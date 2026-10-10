@@ -60,7 +60,7 @@ namespace OnlineStore.Business
 
         public bool Update(Customer customer)
         {
-            if (!IsValidCustomer(customer))
+            if (!IsValidCustomer(customer)||customer.CustomerID<=0)
                 return false;
             if (!_customerDataAccess.Exists(customer.CustomerID) ||
                 _customerDataAccess.EmailExistsForAnotherCustomer(

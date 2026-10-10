@@ -30,7 +30,7 @@ namespace OnlineStore.Business
 
         public bool Update(ProductCategory category)
         {
-            if (!IsValidCategory(category))
+            if (!IsValidCategory(category)||category.CategoryID<=0)
                 return false;
             if (!_productCategoryDataAccess.Exists(category.CategoryID) ||
                 _productCategoryDataAccess.NameExistsForAnotherCategory(

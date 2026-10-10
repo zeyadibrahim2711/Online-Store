@@ -36,7 +36,7 @@ namespace OnlineStore.Business
         public bool Update(Product product)
         {
             if (!_productCatalogDataAccess.Exists(product.ProductID) ||
-                !IsValidProduct(product))
+                !IsValidProduct(product)||product.ProductID<=0)
                 return false;
 
             return _productCatalogDataAccess.Update(product);
