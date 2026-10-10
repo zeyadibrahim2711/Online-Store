@@ -22,6 +22,6 @@ namespace OnlineStore.Models
         public decimal TotalAmount { get; set; }
 
         public OrderStatus Status { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }
