@@ -70,7 +70,15 @@ namespace OnlineStore.Business
             if (orderId <= 0 ||
                 !_orderDataAccess.Exists(orderId))
                 return false;
+            Order order = _orderDataAccess.GetById(orderId);
 
+            if (order == null)
+                return false;
+            
+            if (order.Status == Order.OrderStatus.Delivered ||
+                order.Status == Order.OrderStatus.Cancelled)
+                return false;
+            
             return _orderDataAccess.Cancel(orderId);
         }
         public Order GetById(int orderId)
