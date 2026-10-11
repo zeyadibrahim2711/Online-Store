@@ -231,14 +231,15 @@ namespace OnlineStore.DataAccess
             {
                 string query = @"
             UPDATE Orders
-            SET Status = 'Confirmed'
+            SET Status = @Status
             WHERE OrderID = @OrderID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
                         .Value = orderId;
-
+                    command.Parameters.Add("@Status", System.Data.SqlDbType.NVarChar, 50)
+                        .Value = nameof(OrderStatus.Confirmed);
                     connection.Open();
 
                     return command.ExecuteNonQuery() > 0;
@@ -253,13 +254,14 @@ namespace OnlineStore.DataAccess
             SELECT COUNT(*)
             FROM Orders
             WHERE OrderID = @OrderID
-              AND Status = 'Confirmed'";
+              AND Status = @Status";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.Add("@OrderID", System.Data.SqlDbType.Int)
                         .Value = orderId;
-
+                    command.Parameters.Add("@Status", System.Data.SqlDbType.NVarChar, 50)
+                        .Value = nameof(OrderStatus.Confirmed);
                     connection.Open();
 
                     return (int)command.ExecuteScalar() > 0;
@@ -287,8 +289,8 @@ namespace OnlineStore.DataAccess
                     command.Parameters.Add("@ProductID", SqlDbType.Int)
                         .Value = productId;
 
-                    command.Parameters.Add("@Status", SqlDbType.Int)
-                        .Value = (int)Order.OrderStatus.Delivered;
+                    command.Parameters.Add("@Status", System.Data.SqlDbType.NVarChar, 50)
+                        .Value = nameof(OrderStatus.Delivered);
 
                     connection.Open();
 
