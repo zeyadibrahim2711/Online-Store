@@ -49,6 +49,7 @@
     <Compile Include="CartItemDataAccess.cs" />
     <Compile Include="CustomerDataAccess.cs" />
     <Compile Include="Data\DatabaseConnection.cs" />
+    <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="OrderDataAccess.cs" />
     <Compile Include="OrderItemDataAccess.cs" />
     <Compile Include="PaymentDataAccess.cs" />
