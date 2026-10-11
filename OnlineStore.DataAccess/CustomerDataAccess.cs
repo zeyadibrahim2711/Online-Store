@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-
+using OnlineStore.Helpers;
 namespace OnlineStore.DataAccess
 {
     public class CustomerDataAccess
@@ -101,7 +101,7 @@ public Customer GetByUsername(string username)
                    Email,
                    Phone,
                    Address,
-                   Username
+                   Username,Password
             FROM Customers
             WHERE Username = @Username";
 
@@ -124,6 +124,7 @@ public Customer GetByUsername(string username)
                         Phone = reader["Phone"].ToString(),
                         Address = reader["Address"].ToString(),
                         Username = reader["Username"].ToString(),
+                        Password = reader["Password"].ToString()
                     };
                 }
             }
@@ -142,7 +143,7 @@ public Customer GetByUsername(string username)
             {
                 string query = @"
             SELECT CustomerID, Name, Email, Phone, Address,
-                   Username, Password
+                   Username
             FROM Customers";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -160,8 +161,7 @@ public Customer GetByUsername(string username)
                                 Email = reader["Email"].ToString(),
                                 Phone = reader["Phone"].ToString(),
                                 Address = reader["Address"].ToString(),
-                                Username = reader["Username"].ToString(),
-                                Password = reader["Password"].ToString()
+                                Username = reader["Username"].ToString()
                             });
                         }
                     }
@@ -200,7 +200,7 @@ public Customer GetByUsername(string username)
                                           .Value = customer.Username;
 
                     command.Parameters.Add("@Password", SqlDbType.NVarChar, 100)
-                                          .Value = customer.Password;
+                        .Value = PasswordHasher.HashPassword(customer.Password);
 
                     connection.Open();
 
@@ -210,6 +210,23 @@ public Customer GetByUsername(string username)
         }
         public bool Update(Customer customer)
         {
+            Customer existingCustomer = GetById(customer.CustomerID);
+
+            if (existingCustomer == null)
+                return false;
+
+            string passwordToSave;
+
+            if (string.IsNullOrEmpty(customer.Password) ||
+                customer.Password == existingCustomer.Password)
+            {
+                passwordToSave = existingCustomer.Password;
+            }
+            else
+            {
+                passwordToSave =
+                    PasswordHasher.HashPassword(customer.Password);
+            }
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = @"
@@ -243,7 +260,7 @@ public Customer GetByUsername(string username)
                                       .Value = customer.Username;
 
                     command.Parameters.Add("@Password", SqlDbType.NVarChar, 100)
-                                      .Value = customer.Password;
+                                      .Value = passwordToSave;
 
                     connection.Open();
 
@@ -327,8 +344,8 @@ public bool UsernameExistsForAnotherCustomer(string username, int customerId)
 
         using (SqlCommand command = new SqlCommand(query, connection))
         {
-            command.Parameters.AddWithValue("@Username", username);
-            command.Parameters.AddWithValue("@CustomerID", customerId);
+            command.Parameters.Add("@Username",SqlDbType.NVarChar,100).Value=username;
+            command.Parameters.Add("@CustomerID", SqlDbType.Int).Value=customerId;
 
             connection.Open();
 
