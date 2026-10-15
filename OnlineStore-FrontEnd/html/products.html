@@ -1,0 +1,74 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Online Store</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Online Store</a>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+    </nav>
+</header>
+
+<main>
+    <h1>Our Products</h1>
+
+    <form>
+        <label for="search">Search Products:</label>
+        <input type="search" id="search" name="search"
+               placeholder="Enter product name">
+
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <option value="">All Categories</option>
+            <option value="electronics">Electronics</option>
+            <option value="accessories">Accessories</option>
+        </select>
+
+        <button type="button">Search</button>
+    </form>
+
+    <section>
+        <article>
+            <h2>Headphones</h2>
+            <p>Price: $49.99</p>
+            <a href="product-details.html">View Details</a>
+        </article>
+
+        <article>
+            <h2>Smart Watch</h2>
+            <p>Price: $79.99</p>
+            <a href="product-details.html">View Details</a>
+        </article>
+
+        <article>
+            <h2>Backpack</h2>
+            <p>Price: $34.99</p>
+            <a href="product-details.html">View Details</a>
+        </article>
+
+        <article>
+            <h2>Wireless Mouse</h2>
+            <p>Price: $19.99</p>
+            <a href="product-details.html">View Details</a>
+        </article>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Online Store. All rights reserved.</p>
+</footer>
+
+<script src="../JS/script.js"></script>
+</body>
+</html>
