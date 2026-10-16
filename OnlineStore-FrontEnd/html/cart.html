@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Online Store</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Online Store</a>
+        <a href="products.html">Products</a>
+        <a href="orders.html">My Orders</a>
+    </nav>
+</header>
+
+<main>
+    <h1>Shopping Cart</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>Headphones</td>
+            <td>$49.99</td>
+            <td>
+                <input type="number" value="1" min="1"
+                       aria-label="Headphones quantity">
+            </td>
+            <td>$49.99</td>
+            <td>
+                <button type="button">Remove</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <section>
+        <h2>Order Summary</h2>
+        <p>Subtotal: $49.99</p>
+        <p>Shipping: Calculated at checkout</p>
+
+        <a href="checkout.html">Proceed to Checkout</a>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Online Store. All rights reserved.</p>
+</footer>
+
+<script src="../JS/script.js"></script>
+</body>
+</html>
