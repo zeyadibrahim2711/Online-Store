@@ -4,71 +4,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Online Store</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+
+    <title>Products | Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-<header>
-    <nav>
-        <a href="index.html">Online Store</a>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html">Cart</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-    </nav>
+<header class="site-header">
+    <div class="container nav">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+            <a class="active" href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="orders.html">My Orders</a>
+            <a href="profile.html">Account</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a class="icon-btn" href="cart.html" aria-label="Cart">
+                🛒 <span id="cart-count" class="badge">0</span>
+            </a>
+
+            <button id="mobile-menu" class="icon-btn mobile-only">
+                ☰
+            </button>
+        </div>
+
+    </div>
 </header>
 
-<main>
-    <h1>Our Products</h1>
+<main class="page">
+    <div class="container">
 
-    <form>
-        <label for="search">Search Products:</label>
-        <input type="search" id="search" name="search"
-               placeholder="Enter product name">
+        <div class="page-title">
+            <div>
+                <span class="eyebrow">OUR COLLECTION</span>
 
-        <label for="category">Category:</label>
-        <select id="category" name="category">
-            <option value="">All Categories</option>
-            <option value="electronics">Electronics</option>
-            <option value="accessories">Accessories</option>
-        </select>
+                <h1>All Products</h1>
 
-        <button type="button">Search</button>
-    </form>
+                <p>
+                    Find the right products for your everyday needs.
+                </p>
+            </div>
+        </div>
 
-    <section>
-        <article>
-            <h2>Headphones</h2>
-            <p>Price: $49.99</p>
-            <a href="product-details.html">View Details</a>
-        </article>
+        <div class="filters">
 
-        <article>
-            <h2>Smart Watch</h2>
-            <p>Price: $79.99</p>
-            <a href="product-details.html">View Details</a>
-        </article>
+            <div class="search-box">
+                <span>⌕</span>
 
-        <article>
-            <h2>Backpack</h2>
-            <p>Price: $34.99</p>
-            <a href="product-details.html">View Details</a>
-        </article>
+                <input
+                        type="search"
+                        id="search-input"
+                        placeholder="Search products..."
+                >
+            </div>
 
-        <article>
-            <h2>Wireless Mouse</h2>
-            <p>Price: $19.99</p>
-            <a href="product-details.html">View Details</a>
-        </article>
-    </section>
+            <select id="category-filter">
+                <option value="">All Categories</option>
+                <option value="electronics">Electronics</option>
+                <option value="accessories">Accessories</option>
+            </select>
+
+            <select id="sort-filter">
+                <option value="default">Sort: Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+            </select>
+
+        </div>
+
+        <section class="product-grid">
+
+            <article class="product-card">
+                <div class="product-image">
+                    🎧
+                </div>
+
+                <h3>Headphones</h3>
+
+                <p class="product-price">$49.99</p>
+
+                <a class="btn btn-primary"
+                   href="product-details.html">
+                    View Details
+                </a>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image">
+                    ⌚
+                </div>
+
+                <h3>Smart Watch</h3>
+
+                <p class="product-price">$79.99</p>
+
+                <a class="btn btn-primary"
+                   href="product-details.html">
+                    View Details
+                </a>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image">
+                    🎒
+                </div>
+
+                <h3>Backpack</h3>
+
+                <p class="product-price">$34.99</p>
+
+                <a class="btn btn-primary"
+                   href="product-details.html">
+                    View Details
+                </a>
+            </article>
+
+            <article class="product-card">
+                <div class="product-image">
+                    🖱️
+                </div>
+
+                <h3>Wireless Mouse</h3>
+
+                <p class="product-price">$19.99</p>
+
+                <a class="btn btn-primary"
+                   href="product-details.html">
+                    View Details
+                </a>
+            </article>
+
+        </section>
+
+    </div>
 </main>
 
-<footer>
-    <p>&copy; 2026 Online Store. All rights reserved.</p>
+<footer class="site-footer">
+    <div class="container footer-content">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <p>
+            &copy; 2026 Cartiva. All rights reserved.
+        </p>
+
+    </div>
 </footer>
 
-<script src="../JS/script.js"></script>
 </body>
 </html>
