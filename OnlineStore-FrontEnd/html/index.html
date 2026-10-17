@@ -3,54 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Online Store</title>
+    <title>Cartiva | Home</title>
     <link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
+<header class="site-header">
+    <div class="container nav">
 
-<header>
-    <nav>
-        <a href="index.html">Online Store</a>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html">Cart</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-    </nav>
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+            <a class="active" href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="orders.html">My Orders</a>
+            <a href="profile.html">Account</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a class="icon-btn" href="cart.html" aria-label="Cart">
+                🛒 <span id="cart-count" class="badge">0</span>
+            </a>
+
+            <button id="mobile-menu" class="icon-btn mobile-only">
+                ☰
+            </button>
+        </div>
+
+    </div>
 </header>
 
 <main>
-    <section>
-        <h1>Welcome to Our Online Store</h1>
-        <p>Discover our products and find what you need.</p>
-        <a href="products.html">Shop Now</a>
+    <section class="hero">
+        <div class="container hero-grid">
+
+            <div>
+                <span class="eyebrow">SMART SHOPPING • BETTER CHOICE</span>
+
+                <h1>
+                    Everything you need.
+                    <br>
+                    <span>One smart store.</span>
+                </h1>
+
+                <p>
+                    Discover quality products, add them to your cart,
+                    checkout easily, and track your orders in one place.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="products.html">
+                        Shop Now →
+                    </a>
+
+                    <a class="btn btn-secondary" href="#categories">
+                        Explore Categories
+                    </a>
+                </div>
+
+                <div class="trust-row">
+                    <span>✓ Secure checkout</span>
+                    <span>✓ Fast shipping</span>
+                    <span>✓ Easy returns</span>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-product-glow"></div>
+
+                <div class="hero-product">⌚</div>
+
+                <div class="floating-card top">
+                    ⭐ <strong>4.9</strong>
+                    <small>Top rated</small>
+                </div>
+
+                <div class="floating-card bottom">
+                    🔥 <strong>50% OFF</strong>
+                    <small>Selected items</small>
+                </div>
+            </div>
+
+        </div>
     </section>
 
-    <section>
-        <h2>Featured Products</h2>
+    <section class="section muted">
+        <div class="container">
 
-        <article>
-            <h3>Headphones</h3>
-            <p>Price: $49.99</p>
-            <a href="product-details.html">View Details</a>
-        </article>
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">TRENDING NOW</span>
+                    <h2>Featured Products</h2>
+                </div>
 
-        <article>
-            <h3>Smart Watch</h3>
-            <p>Price: $79.99</p>
-            <a href="product-details.html">View Details</a>
-        </article>
+                <a href="products.html" class="text-link">
+                    See all products →
+                </a>
+            </div>
 
-        <article>
-            <h3>Backpack</h3>
-            <p>Price: $34.99</p>
-            <a href="product-details.html">View Details</a>
-        </article>
+            <div class="product-grid">
+
+                <article class="product-card">
+                    <div class="product-image">🎧</div>
+                    <h3>Headphones</h3>
+                    <p class="product-price">$49.99</p>
+                    <a href="product-details.html" class="btn btn-primary">
+                        View Details
+                    </a>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-image">⌚</div>
+                    <h3>Smart Watch</h3>
+                    <p class="product-price">$79.99</p>
+                    <a href="product-details.html" class="btn btn-primary">
+                        View Details
+                    </a>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-image">🎒</div>
+                    <h3>Backpack</h3>
+                    <p class="product-price">$34.99</p>
+                    <a href="product-details.html" class="btn btn-primary">
+                        View Details
+                    </a>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+    <section class="section" id="categories">
+        <div class="container">
+
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">BROWSE</span>
+                    <h2>Shop by Category</h2>
+                </div>
+
+                <a href="products.html" class="text-link">
+                    View all →
+                </a>
+            </div>
+
+            <div class="category-grid">
+
+                <a href="products.html" class="category-card">
+                    <span>🎧</span>
+                    <h3>Electronics</h3>
+                    <p>Explore electronic products</p>
+                </a>
+
+                <a href="products.html" class="category-card">
+                    <span>👕</span>
+                    <h3>Fashion</h3>
+                    <p>Discover clothing and accessories</p>
+                </a>
+
+                <a href="products.html" class="category-card">
+                    <span>🏠</span>
+                    <h3>Home & Living</h3>
+                    <p>Find products for your home</p>
+                </a>
+
+                <a href="products.html" class="category-card">
+                    <span>🎒</span>
+                    <h3>Accessories</h3>
+                    <p>Complete your everyday style</p>
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+    <section class="section">
+        <div class="container benefits">
+
+            <div>
+                <span class="benefit-icon">🚚</span>
+                <h3>Fast Delivery</h3>
+                <p>Reliable shipping with order tracking.</p>
+            </div>
+
+            <div>
+                <span class="benefit-icon">🔒</span>
+                <h3>Secure Payment</h3>
+                <p>A simple and secure checkout experience.</p>
+            </div>
+
+            <div>
+                <span class="benefit-icon">↩️</span>
+                <h3>Easy Returns</h3>
+                <p>Simple support when you need it.</p>
+            </div>
+
+            <div>
+                <span class="benefit-icon">💬</span>
+                <h3>Customer Support</h3>
+                <p>We're here to help with your order.</p>
+            </div>
+
+        </div>
     </section>
 </main>
 
-<footer>
-    <p>&copy; 2026 Online Store. All rights reserved.</p>
+<footer class="site-footer">
+    <div class="container footer-content">
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <p>&copy; 2026 Cartiva. All rights reserved.</p>
+
+        <div class="footer-links">
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="login.html">Login</a>
+        </div>
+    </div>
 </footer>
 
 <script src="../JS/script.js"></script>
