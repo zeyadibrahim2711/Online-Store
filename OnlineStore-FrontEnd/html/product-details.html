@@ -4,43 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details - Online Store</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+
+    <title>Product Details | Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-<header>
-    <nav>
-        <a href="index.html">Online Store</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html">Cart</a>
-        <a href="login.html">Login</a>
-    </nav>
+<header class="site-header">
+    <div class="container nav">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+            <a class="active" href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="orders.html">My Orders</a>
+            <a href="profile.html">Account</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a class="icon-btn" href="cart.html" aria-label="Cart">
+                🛒 <span id="cart-count" class="badge">0</span>
+            </a>
+
+            <button id="mobile-menu" class="icon-btn mobile-only">
+                ☰
+            </button>
+        </div>
+
+    </div>
 </header>
 
-<main>
-    <h1>Product Details</h1>
+<main class="page">
+    <div class="container">
 
-    <section>
-        <h2>Headphones</h2>
-        <p>Description: Comfortable headphones for everyday use.</p>
-        <p>Price: $49.99</p>
-        <p>Available Quantity: 10</p>
+        <div class="product-details">
 
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity"
-               value="1" min="1" max="10">
+            <div class="product-details-image">
+                🎧
+            </div>
 
-        <button type="button">Add to Cart</button>
-    </section>
+            <div class="product-details-info">
 
-    <p><a href="products.html">Back to Products</a></p>
+                <span class="eyebrow">PRODUCT DETAILS</span>
+
+                <h1>Headphones</h1>
+
+                <p class="details-description">
+                    Comfortable headphones for everyday use.
+                    Enjoy your favorite music with ease.
+                </p>
+
+                <p class="details-price">$49.99</p>
+
+                <p class="details-quantity">
+                    Available Quantity:
+                    <span>10</span>
+                </p>
+
+                
+                <div class="quantity-control">
+
+                    <label for="quantity">Quantity:</label>
+
+                    <div class="quantity-input">
+
+                        <button type="button" class="quantity-btn" aria-label="Decrease quantity">
+                            −
+                        </button>
+
+                        <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                value="1"
+                                min="1"
+                                max="10"
+                        >
+
+                        <button type="button" class="quantity-btn" aria-label="Increase quantity">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button type="button" class="btn btn-primary add-to-cart">
+                    Add to Cart
+                </button>
+
+                <a class="back-link" href="products.html">
+                    ← Back to Products
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
 </main>
 
-<footer>
-    <p>&copy; 2026 Online Store. All rights reserved.</p>
+<footer class="site-footer">
+    <div class="container footer-content">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <p>
+            &copy; 2026 Cartiva. All rights reserved.
+        </p>
+
+    </div>
 </footer>
 
-<script src="../JS/script.js"></script>
 </body>
 </html>
