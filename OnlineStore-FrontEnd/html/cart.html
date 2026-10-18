@@ -3,62 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - Online Store</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+
+    <title>Cart | Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-<header>
-    <nav>
-        <a href="index.html">Online Store</a>
-        <a href="products.html">Products</a>
-        <a href="orders.html">My Orders</a>
-    </nav>
+<header class="site-header">
+    <div class="container nav">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="orders.html">My Orders</a>
+            <a href="profile.html">Account</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a class="icon-btn active-icon" href="cart.html" aria-label="Cart">
+                🛒
+                <span id="cart-count" class="badge">0</span>
+            </a>
+        </div>
+
+    </div>
 </header>
 
-<main>
-    <h1>Shopping Cart</h1>
+<main class="page">
+    <div class="container">
 
-    <table>
-        <thead>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Action</th>
-        </tr>
-        </thead>
+        <div class="page-title">
+            <span class="eyebrow">SHOPPING CART</span>
+            <h1>Your Cart</h1>
+            <p>Review your items before checkout.</p>
+        </div>
 
-        <tbody>
-        <tr>
-            <td>Headphones</td>
-            <td>$49.99</td>
-            <td>
-                <input type="number" value="1" min="1"
-                       aria-label="Headphones quantity">
-            </td>
-            <td>$49.99</td>
-            <td>
-                <button type="button">Remove</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <div id="cart-view">
 
-    <section>
-        <h2>Order Summary</h2>
-        <p>Subtotal: $49.99</p>
-        <p>Shipping: Calculated at checkout</p>
+            <div class="cart-layout">
 
-        <a href="checkout.html">Proceed to Checkout</a>
-    </section>
+                <section class="cart-items">
+
+                    <article class="cart-item">
+
+                        <div class="cart-item-image">
+                            🎧
+                        </div>
+
+                        <div class="cart-item-info">
+                            <h3>Headphones</h3>
+                            <p>Comfortable headphones for everyday use.</p>
+                            <span class="cart-item-price">$49.99</span>
+                        </div>
+
+
+                        <div class="cart-item-quantity">
+                            <label for="cart-quantity">Quantity</label>
+
+                            <div class="quantity-input">
+                                <button type="button" class="quantity-btn" aria-label="Decrease quantity">
+                                    −
+                                </button>
+
+                                <input
+                                        type="number"
+                                        id="cart-quantity"
+                                        name="cart-quantity"
+                                        value="1"
+                                        min="1"
+                                        max="10"
+                                >
+
+                                <button type="button" class="quantity-btn" aria-label="Increase quantity">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="cart-item-total">
+                            <span>Total</span>
+                            <strong>$49.99</strong>
+                        </div>
+
+                        <button type="button" class="remove-btn">
+                            Remove
+                        </button>
+
+                    </article>
+
+                </section>
+
+                <aside class="cart-summary">
+
+                    <h2>Order Summary</h2>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>$49.99</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>Calculated at checkout</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <strong>$49.99</strong>
+                    </div>
+
+                    <a href="checkout.html" class="btn btn-primary checkout-btn">
+                        Proceed to Checkout
+                    </a>
+
+                    <a href="products.html" class="continue-shopping">
+                        Continue Shopping →
+                    </a>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </div>
 </main>
 
-<footer>
-    <p>&copy; 2026 Online Store. All rights reserved.</p>
+<footer class="site-footer">
+    <div class="container footer-content">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <p>&copy; 2026 Cartiva. All rights reserved.</p>
+
+    </div>
 </footer>
 
-<script src="../JS/script.js"></script>
 </body>
 </html>
