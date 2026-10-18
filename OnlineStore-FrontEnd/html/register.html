@@ -3,62 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Online Store</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+
+    <title>Create Account | Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
 
-<header>
-    <nav>
-        <a href="index.html">Online Store</a>
-        <a href="products.html">Products</a>
-        <a href="login.html">Login</a>
-    </nav>
-</header>
+<body class="auth-page">
 
-<main>
-    <h1>Create Account</h1>
+<div class="auth-wrap">
 
-    <form>
-        <div>
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
+    <a class="brand auth-brand" href="index.html">
+        <span class="brand-mark">C</span>
+        Cartiva
+    </a>
 
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
+    <div class="auth-card">
 
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
+        <span class="eyebrow">GET STARTED</span>
 
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password"
-                   name="password" required>
-        </div>
+        <h1>Create account</h1>
 
-        <div>
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword"
-                   name="confirmPassword" required>
-        </div>
+        <p class="muted-text">
+            Create your account and start shopping.
+        </p>
 
-        <button type="submit">Create Account</button>
-    </form>
+        <form id="register-form">
 
-    <p>Already have an account?
-        <a href="login.html">Login here</a>
-    </p>
-</main>
+            <label for="name">
+                Full Name
 
-<footer>
-    <p>&copy; 2026 Online Store. All rights reserved.</p>
-</footer>
+                <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Enter your full name"
+                        required
+                >
+            </label>
 
-<script src="../JS/script.js"></script>
+            <label for="email">
+                Email
+
+                <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                >
+            </label>
+
+            <label for="username">
+                Username
+
+                <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        placeholder="Choose a username"
+                        required
+                >
+            </label>
+
+            <label for="password">
+                Password
+
+                <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="Create a password"
+                        minlength="6"
+                        required
+                >
+            </label>
+
+            <label for="confirmPassword">
+                Confirm Password
+
+                <input
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        type="password"
+                        placeholder="Confirm your password"
+                        minlength="6"
+                        required
+                >
+            </label>
+
+            <button type="submit" class="btn btn-primary btn-block">
+                Create Account
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+            Already have an account?
+            <a href="login.html">Sign in</a>
+        </p>
+
+    </div>
+
+</div>
+
 </body>
 </html>
