@@ -3,46 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Online Store</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+
+    <title>Login | Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
 
-<header>
-    <nav>
-        <a href="index.html">Online Store</a>
-        <a href="products.html">Products</a>
-        <a href="register.html">Register</a>
-    </nav>
-</header>
+<body class="auth-page">
 
-<main>
-    <h1>Login</h1>
+<div class="auth-wrap">
 
-    <form>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
+    <a class="brand auth-brand" href="index.html">
+        <span class="brand-mark">C</span>
+        Cartiva
+    </a>
 
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password"
-                   name="password" required>
-        </div>
+    <div class="auth-card">
 
-        <button type="submit">Login</button>
-    </form>
+        <span class="eyebrow">WELCOME BACK</span>
 
-    <p>Don't have an account?
-        <a href="register.html">Register here</a>
-    </p>
-</main>
+        <h1>Sign in</h1>
 
-<footer>
-    <p>&copy; 2026 Online Store. All rights reserved.</p>
-</footer>
+        <p class="muted-text">
+            Access your account and orders.
+        </p>
 
-<script src="../JS/script.js"></script>
+        <form id="login-form">
+
+            <label for="email">
+                Email
+
+                <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                >
+            </label>
+
+            <label for="password">
+                Password
+
+                <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        required
+                >
+            </label>
+
+            <button type="submit" class="btn btn-primary btn-block">
+                Sign in
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+            Don't have an account?
+            <a href="register.html">Create one</a>
+        </p>
+
+    </div>
+
+</div>
+
 </body>
 </html>
