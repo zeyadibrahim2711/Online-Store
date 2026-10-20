@@ -1,10 +1,175 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
-$END$
+
+<header class="site-header">
+    <div class="container nav">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="orders.html">My Orders</a>
+        </nav>
+
+    </div>
+</header>
+
+<main class="page">
+    <div class="container">
+
+        <div class="page-title checkout-title">
+            <span class="eyebrow">CHECKOUT</span>
+            <h1>Complete your order</h1>
+            <p>Enter your shipping details and choose a payment method.</p>
+        </div>
+
+        <div class="checkout-grid">
+
+            <form id="checkout-form" class="card form-card">
+
+                <h2>Shipping &amp; Payment</h2>
+
+                <div class="form-grid">
+
+                    <label>
+                        Full Name
+                        <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                placeholder="Enter your full name"
+                                required
+                        >
+                    </label>
+
+                    <label>
+                        Email
+                        <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="Enter your email"
+                                required
+                        >
+                    </label>
+
+                    <label class="full">
+                        Address
+                        <input
+                                id="address"
+                                name="address"
+                                type="text"
+                                placeholder="Street, city, country"
+                                required
+                        >
+                    </label>
+
+                    <label>
+                        Phone
+                        <input
+                                id="phone"
+                                name="phone"
+                                type="tel"
+                                placeholder="Enter your phone number"
+                                required
+                        >
+                    </label>
+
+                    <label>
+                        Payment Method
+                        <select id="payment" name="payment" required>
+                            <option value="Cash on Delivery">
+                                Cash on Delivery
+                            </option>
+                            <option value="Card">
+                                Card
+                            </option>
+                        </select>
+                    </label>
+
+                </div>
+
+
+                <div class="checkout-note">
+                    <span class="note-icon">!</span>
+                    <p>
+                        Your order details will be reviewed before confirmation.
+                    </p>
+                </div>
+
+
+                <button
+                        class="btn btn-primary btn-block"
+                        type="submit"
+                >
+                    Place Order
+                </button>
+
+            </form>
+
+
+            <aside id="checkout-summary" class="card summary">
+
+                <h2>Order Summary</h2>
+
+                <p class="summary-items">3 items in your cart</p>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>$49.99</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>Free</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <strong>$49.99</strong>
+                </div>
+
+                <a href="cart.html" class="continue-shopping">
+                    ← Back to Cart
+                </a>
+
+            </aside>
+
+
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-content">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <p>&copy; 2026 Cartiva. All rights reserved.</p>
+
+    </div>
+</footer>
+
 </body>
 </html>
