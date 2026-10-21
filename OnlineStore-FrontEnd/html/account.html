@@ -1,10 +1,156 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Account | Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
-$END$
+
+<header class="site-header">
+    <div class="container nav">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="orders.html">My Orders</a>
+            <a class="active" href="account.html">Account</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a class="icon-btn" href="cart.html">
+                🛒
+                <span id="cart-count" class="badge">0</span>
+            </a>
+        </div>
+
+    </div>
+</header>
+
+<main class="page">
+    <div class="container">
+
+        <div class="page-title">
+            <span class="eyebrow">ACCOUNT</span>
+            <h1>My account</h1>
+        </div>
+
+
+        <div id="account-view">
+
+            <!-- Account Information -->
+            <section class="account-card">
+                <h2>Personal Information</h2>
+
+                <div class="account-info">
+
+                    <div class="account-row">
+                        <span class="account-label">Full Name</span>
+                        <span class="account-value">Ahmed Mohamed</span>
+                    </div>
+
+                    <div class="account-row">
+                        <span class="account-label">Email Address</span>
+                        <span class="account-value">ahmed@example.com</span>
+                    </div>
+
+                    <div class="account-row">
+                        <span class="account-label">Phone Number</span>
+                        <span class="account-value">+20 100 123 4567</span>
+                    </div>
+
+                    <div class="account-row">
+                        <span class="account-label">Member Since</span>
+                        <span class="account-value">October 2026</span>
+                    </div>
+
+                </div>
+
+                <a href="#" class="account-button">Edit Profile</a>
+            </section>
+
+            <!-- Account Quick Links -->
+            <section class="account-card">
+                <h2>My Account</h2>
+
+                <div class="account-actions">
+
+                    <a href="orders.html" class="account-link">
+                        <span>My Orders</span>
+                        <span>→</span>
+                    </a>
+
+                    <a href="reviews.html" class="account-link">
+                        <span>My Reviews</span>
+                        <span>→</span>
+                    </a>
+
+                    <a href="tracking.html" class="account-link">
+                        <span>Track My Order</span>
+                        <span>→</span>
+                    </a>
+
+                    <a href="cart.html" class="account-link">
+                        <span>My Shopping Cart</span>
+                        <span>→</span>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- Account Settings -->
+            <section class="account-card">
+                <h2>Account Settings</h2>
+
+                <div class="account-actions">
+
+                    <a href="#" class="account-link">
+                        <span>Change Password</span>
+                        <span>→</span>
+                    </a>
+
+                    <a href="#" class="account-link">
+                        <span>Manage Addresses</span>
+                        <span>→</span>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- Sign Out -->
+            <section class="account-card">
+                <h2>Sign Out</h2>
+
+                <p class="account-logout-text">
+                    Sign out of your Cartiva account securely.
+                </p>
+
+                <a href="login.html" class="account-button account-logout">
+                    Log Out
+                </a>
+            </section>
+
+        </div>
+
+
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container copyright">
+        © 2026 Cartiva.
+    </div>
+</footer>
+
+
 </body>
 </html>
