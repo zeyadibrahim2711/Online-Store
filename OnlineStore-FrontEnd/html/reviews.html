@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Product Reviews - Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="container nav">
+
+        <a
+                href="index.html"
+                class="brand"
+        >
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="orders.html">
+                My Orders
+            </a>
+
+            <a href="account.html">
+                Account
+            </a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <a
+                    href="cart.html"
+                    class="icon-btn"
+            >
+                🛒
+                <span
+                        class="badge"
+                        id="cart-count"
+                >
+                        0
+                    </span>
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <div class="container">
+
+        <div class="page-title">
+
+            <h1>
+                Product Reviews
+            </h1>
+
+            <p>
+                See what customers think about our products.
+            </p>
+
+        </div>
+
+
+        <div id="reviews-product" class="review-product">
+
+            <h2>Wireless Headphones</h2>
+
+            <p class="review-rating">★★★★★</p>
+
+            <p class="review-text">
+                4.8 out of 5 based on 24 customer reviews.
+            </p>
+
+        </div>
+
+        <div id="reviews-list" class="reviews-list">
+
+            <!-- Review 1 -->
+            <div class="review-item">
+
+                <div class="review-header">
+                    <div>
+                        <h3 class="review-author">Ahmed Mohamed</h3>
+                        <p class="review-date">October 18, 2026</p>
+                    </div>
+
+                    <span class="review-rating">★★★★★</span>
+                </div>
+
+                <p class="review-text">
+                    Excellent sound quality and comfortable to wear.
+                    The battery lasts a long time. Highly recommended!
+                </p>
+
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-item">
+
+                <div class="review-header">
+                    <div>
+                        <h3 class="review-author">Sara Ali</h3>
+                        <p class="review-date">October 15, 2026</p>
+                    </div>
+
+                    <span class="review-rating">★★★★☆</span>
+                </div>
+
+                <p class="review-text">
+                    Great headphones with a stylish design.
+                    The sound is clear, and the price is reasonable.
+                </p>
+
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-item">
+
+                <div class="review-header">
+                    <div>
+                        <h3 class="review-author">Omar Hassan</h3>
+                        <p class="review-date">October 12, 2026</p>
+                    </div>
+
+                    <span class="review-rating">★★★★★</span>
+                </div>
+
+                <p class="review-text">
+                    Very good quality and easy to use.
+                    I am satisfied with this purchase.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card review-form-card">
+
+            <h2>
+                Write a Review
+            </h2>
+
+            <form id="review-form">
+
+                <label>
+                    Rating
+
+                    <select id="review-rating">
+
+                        <option value="5">
+                            ⭐⭐⭐⭐⭐
+                        </option>
+
+                        <option value="4">
+                            ⭐⭐⭐⭐
+                        </option>
+
+                        <option value="3">
+                            ⭐⭐⭐
+                        </option>
+
+                        <option value="2">
+                            ⭐⭐
+                        </option>
+
+                        <option value="1">
+                            ⭐
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    Your Review
+
+                    <textarea
+                            id="review-text"
+                            rows="5"
+                            placeholder="Write your review..."
+                            required
+                    ></textarea>
+
+                </label>
+
+
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                >
+                    Submit Review
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container">
+
+        <p>
+            © 2026 Cartiva. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+</body>
+
+</html>
