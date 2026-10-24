@@ -1,10 +1,128 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Wishlist - Cartiva</title>
+
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
-$END$
+
+<header class="site-header">
+
+    <div class="container nav">
+
+        <a href="index.html" class="brand">
+            <span class="brand-mark">C</span>
+            Cartiva
+        </a>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="orders.html">My Orders</a>
+            <a href="account.html">Account</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="cart.html" class="icon-btn">
+                🛒
+                <span class="badge" id="cart-count">0</span>
+            </a>
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <div class="container">
+
+        <div class="page-title">
+            <h1>My Wishlist</h1>
+            <p>Save your favorite products and find them easily later.</p>
+        </div>
+
+
+        <div id="wishlist-content">
+
+            <div class="wishlist-grid">
+
+                <div class="wishlist-item">
+
+                    <div class="wishlist-image">
+                        <span class="wishlist-product-emoji">🎧</span>
+                    </div>
+
+                    <div class="wishlist-info">
+                        <h2>Wireless Headphones</h2>
+                        <p class="wishlist-category">Electronics</p>
+                        <p class="wishlist-price">$79.99</p>
+                    </div>
+
+                    <div class="wishlist-actions">
+                        <a href="product-details.html" class="wishlist-view-btn">
+                            View Product
+                        </a>
+
+                        <button type="button" class="wishlist-remove-btn">
+                            Remove
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="wishlist-item">
+
+                    <div class="wishlist-image">
+                        <span class="wishlist-product-emoji">⌚</span>
+                    </div>
+
+                    <div class="wishlist-info">
+                        <h2>Smart Watch</h2>
+                        <p class="wishlist-category">Accessories</p>
+                        <p class="wishlist-price">$49.99</p>
+                    </div>
+
+                    <div class="wishlist-actions">
+                        <a href="product-details.html" class="wishlist-view-btn">
+                            View Product
+                        </a>
+
+                        <button type="button" class="wishlist-remove-btn">
+                            Remove
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container">
+        <p>© 2026 Cartiva. All rights reserved.</p>
+    </div>
+
+</footer>
+
 </body>
 </html>
