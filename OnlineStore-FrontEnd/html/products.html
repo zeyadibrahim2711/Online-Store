@@ -83,7 +83,9 @@
 
         <section class="product-grid">
 
-            <article class="product-card">
+            <article class="product-card"
+                     data-id="1"
+                     data-category="electronics">
                 <div class="product-image">
                     🎧
                 </div>
@@ -92,13 +94,23 @@
 
                 <p class="product-price">$49.99</p>
 
-                <a class="btn btn-primary"
-                   href="product-details.html">
-                    View Details
-                </a>
+                <div class="product-actions">
+                    <a class="btn btn-primary"
+                       href="product-details.html?id=1">
+                        View Details
+                    </a>
+
+                    <button class="btn btn-add-cart"
+                            type="button"
+                            data-id="1">
+                        Add to Cart
+                    </button>
+                </div>
             </article>
 
-            <article class="product-card">
+            <article class="product-card"
+                     data-id="2"
+                     data-category="electronics">
                 <div class="product-image">
                     ⌚
                 </div>
@@ -107,13 +119,23 @@
 
                 <p class="product-price">$79.99</p>
 
-                <a class="btn btn-primary"
-                   href="product-details.html">
-                    View Details
-                </a>
+                <div class="product-actions">
+                    <a class="btn btn-primary"
+                       href="product-details.html?id=2">
+                        View Details
+                    </a>
+
+                    <button class="btn btn-add-cart"
+                            type="button"
+                            data-id="2">
+                        Add to Cart
+                    </button>
+                </div>
             </article>
 
-            <article class="product-card">
+            <article class="product-card"
+                     data-id="3"
+                     data-category="accessories">
                 <div class="product-image">
                     🎒
                 </div>
@@ -122,13 +144,23 @@
 
                 <p class="product-price">$34.99</p>
 
-                <a class="btn btn-primary"
-                   href="product-details.html">
-                    View Details
-                </a>
+                <div class="product-actions">
+                    <a class="btn btn-primary"
+                       href="product-details.html?id=3">
+                        View Details
+                    </a>
+
+                    <button class="btn btn-add-cart"
+                            type="button"
+                            data-id="3">
+                        Add to Cart
+                    </button>
+                </div>
             </article>
 
-            <article class="product-card">
+            <article class="product-card"
+                     data-id="4"
+                     data-category="electronics">
                 <div class="product-image">
                     🖱️
                 </div>
@@ -137,10 +169,18 @@
 
                 <p class="product-price">$19.99</p>
 
-                <a class="btn btn-primary"
-                   href="product-details.html">
-                    View Details
-                </a>
+                <div class="product-actions">
+                    <a class="btn btn-primary"
+                       href="product-details.html?id=4">
+                        View Details
+                    </a>
+
+                    <button class="btn btn-add-cart"
+                            type="button"
+                            data-id="4">
+                        Add to Cart
+                    </button>
+                </div>
             </article>
 
         </section>
@@ -162,6 +202,6 @@
 
     </div>
 </footer>
-
+<script src="../js/products.js"></script>
 </body>
 </html>
