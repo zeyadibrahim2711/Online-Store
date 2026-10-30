@@ -511,6 +511,34 @@ body {
     color: var(--text-color);
     font-size: 14px;
 }
+.product-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.product-actions .btn {
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-add-cart {
+    padding: 12px 20px;
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-add-cart:hover {
+    background-color: var(--primary-color);
+    color: var(--dark-color);
+}
 
 /* Product Details Page */
 
