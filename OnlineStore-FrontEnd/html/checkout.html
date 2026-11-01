@@ -25,6 +25,12 @@
             <a href="cart.html">Cart</a>
             <a href="orders.html">My Orders</a>
         </nav>
+        <div class="nav-actions">
+            <a href="cart.html" class="icon-btn">
+                🛒
+                <span class="badge" id="cart-count">0</span>
+            </a>
+        </div>
 
     </div>
 </header>
@@ -108,7 +114,7 @@
                 <div class="checkout-note">
                     <span class="note-icon">!</span>
                     <p>
-                        Your order details will be reviewed before confirmation.
+                        Please review your shipping details before placing your order.
                     </p>
                 </div>
 
@@ -127,11 +133,12 @@
 
                 <h2>Order Summary</h2>
 
-                <p class="summary-items">3 items in your cart</p>
+                <p class="summary-items" id="summary-items">0 items in your cart</p>
 
+                <div id="summary-products"></div>
                 <div class="summary-row">
                     <span>Subtotal</span>
-                    <span>$49.99</span>
+                    <span id="subtotal">$49.99</span>
                 </div>
 
                 <div class="summary-row">
@@ -143,7 +150,7 @@
 
                 <div class="summary-row summary-total">
                     <span>Total</span>
-                    <strong>$49.99</strong>
+                    <strong id="total">$49.99</strong>
                 </div>
 
                 <a href="cart.html" class="continue-shopping">
@@ -170,6 +177,6 @@
 
     </div>
 </footer>
-
+<script src="../js/checkout.js"></script>
 </body>
 </html>
