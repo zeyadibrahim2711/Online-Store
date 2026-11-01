@@ -1,4 +1,5 @@
-﻿// Products Data
+﻿
+// Products Data
 const products = [
     {
         id: 1,
@@ -36,18 +37,22 @@ const products = [
 
 // Get Product ID from URL
 const urlParams = new URLSearchParams(window.location.search);
-
 const productId = Number(urlParams.get("id"));
-
 
 // Find Product
 const product = products.find(p => p.id === productId);
 
+// Check if Product Exists
+if (!product) {
+    alert("Product not found!");
+    window.location.href = "products.html";
+} else {
 
+    // Read Reviews Link
+    const readReviewsLink = document.querySelector("#read-reviews");
+    readReviewsLink.href = `reviews.html?id=${product.id}`;
 
-// Display Product Details
-if (product) {
-
+    // Display Product Details
     document.querySelector(".product-details-image").textContent =
         product.image;
 
@@ -63,119 +68,112 @@ if (product) {
     document.querySelector(".details-quantity span").textContent =
         product.quantity;
 
-}
-// Quantity Control
-const quantityInput = document.getElementById("quantity");
+    // Quantity Control
+    const quantityInput = document.getElementById("quantity");
+    const quantityButtons = document.querySelectorAll(".quantity-btn");
 
-const quantityButtons = document.querySelectorAll(".quantity-btn");
+    // Set Maximum Quantity
+    quantityInput.max = product.quantity;
 
+    // Handle Quantity Buttons
+    quantityButtons.forEach((button, index) => {
 
-// Set Maximum Quantity
-quantityInput.max = product.quantity;
+        button.addEventListener("click", function () {
 
+            let quantity = Number(quantityInput.value);
 
-// Handle Quantity Buttons
-quantityButtons.forEach((button, index) => {
+            if (index === 0 && quantity > 1) {
+                quantity--;
+            }
 
-    button.addEventListener("click", function () {
+            if (index === 1 && quantity < product.quantity) {
+                quantity++;
+            }
+
+            quantityInput.value = quantity;
+        });
+    });
+
+    // Handle Manual Quantity Input
+    quantityInput.addEventListener("change", function () {
 
         let quantity = Number(quantityInput.value);
 
-        if (index === 0 && quantity > 1) {
-            quantity--;
+        if (!Number.isInteger(quantity) || quantity < 1) {
+            quantity = 1;
         }
 
-        if (index === 1 && quantity < product.quantity) {
-            quantity++;
+        if (quantity > product.quantity) {
+            quantity = product.quantity;
         }
 
         quantityInput.value = quantity;
     });
-});
 
+    // Get Cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Handle Manual Quantity Input
-quantityInput.addEventListener("change", function () {
-
-    let quantity = Number(quantityInput.value);
-
-    if (!Number.isInteger(quantity) || quantity < 1) {
-        quantity = 1;
+    // Save Cart
+    function saveCart() {
+        localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    if (quantity > product.quantity) {
-        quantity = product.quantity;
+    // Update Cart Count
+    function updateCartCount() {
+
+        const cartCount = document.getElementById("cart-count");
+
+        const totalQuantity = cart.reduce(
+            (total, item) => total + item.quantity,
+            0
+        );
+
+        cartCount.textContent = totalQuantity;
     }
 
-    quantityInput.value = quantity;
-});
-// Get Cart from localStorage
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // Add to Cart
+    const addToCartButton = document.querySelector(".add-to-cart");
 
+    addToCartButton.addEventListener("click", function () {
 
-// Save Cart
-function saveCart() {
-    localStorage.setItem("cart", JSON.stringify(cart));
-}
+        const selectedQuantity = Number(quantityInput.value);
 
+        const existingProduct = cart.find(
+            item => item.id === product.id
+        );
 
-// Update Cart Count
-function updateCartCount() {
+        const currentQuantity = existingProduct
+            ? existingProduct.quantity
+            : 0;
 
-    const cartCount = document.getElementById("cart-count");
+        if (currentQuantity + selectedQuantity > product.quantity) {
+            alert("Not enough stock available!");
+            return;
+        }
 
-    const totalQuantity = cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-    );
+        if (existingProduct) {
+            existingProduct.quantity += selectedQuantity;
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity: selectedQuantity
+            });
+        }
 
-    cartCount.textContent = totalQuantity;
-}
+        saveCart();
+        updateCartCount();
 
+        alert("Product added to cart!");
+    });
 
-// Add to Cart
-const addToCartButton = document.querySelector(".add-to-cart");
-
-addToCartButton.addEventListener("click", function () {
-
-    const selectedQuantity = Number(quantityInput.value);
-
-    const existingProduct = cart.find(
-        item => item.id === product.id
-    );
-
-    const currentQuantity = existingProduct
-        ? existingProduct.quantity
-        : 0;
-
-    if (currentQuantity + selectedQuantity > product.quantity) {
-        alert("Not enough stock available!");
-        return;
-    }
-
-    if (existingProduct) {
-        existingProduct.quantity += selectedQuantity;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity: selectedQuantity
-        });
-    }
-
-    saveCart();
+    // Initial Cart Count
     updateCartCount();
-
-    alert("Product added to cart!");
-});
-
-
-// Initial Cart Count
-updateCartCount();
-function refreshCart() {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
-    updateCartCount();
+    function refreshCart() {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+        updateCartCount();
+    }
+    window.addEventListener("pageshow", refreshCart);
 }
-window.addEventListener("pageshow", refreshCart);
